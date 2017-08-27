@@ -106,7 +106,6 @@ for (var index = 0; index < rawWordList.length; index++) {
             finalWordList.push(rawWordList[index]);
             console.log(" ");
         }
-        console.log(" ");
 }
    return finalWordList;
 }
