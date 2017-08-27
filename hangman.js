@@ -1,22 +1,22 @@
-
+    
+    let wordList;
 
 let gameRunner = (diff) =>
 {
     let wordToGuess;
-    
-    let wordList = fileReader();
-    console.log(wordList);
 
+    fileReader();
+
+    setTimeout(function () {
     wordList = sortAndSplit(wordList, diff);
-
     wordToGuess = wordList[Math.floor((Math.random() * wordList.length))];
-
     wordToGuess = strFormat(wordToGuess);
-
     game(wordToGuess);
-
-
     console.log(wordToGuess);
+    },5000);
+
+
+   
 }
 
 let game = (word) =>
@@ -55,11 +55,11 @@ let fileReader = () =>{
     let reader = new XMLHttpRequest();
     reader.onreadystatechange = function () {
         if (reader.readyState == 4 && reader.status == 200) {
-            return this.responseText;    
+            wordList = reader.responseText;    
         }
     }
 
-    reader.open('GET', url, true);
+    reader.open("GET", url, true);
     reader.send();
 }
 
@@ -92,21 +92,21 @@ let sortAndSplit = (rawWordList, diff) =>{
     }
 
 
+
     rawWordList = rawWordList.split('\n');
     rawWordList.sort(function(a, b){
-    return b.length - a.length;
+    return a.length - b.length;
    });
+   
 
+   
 for (var index = 0; index < rawWordList.length; index++) {
-    if(rawWordList[index].count >= startNum && rawWordList[index].count <= endNum  )
+    if(rawWordList[index].count > startNum && rawWordList[index].count < endNum) //this is the problem
         {
             finalWordList.push(rawWordList[index]);
+            console.log(" ");
         }
-    
+        console.log(" ");
 }
-
-
-
-
    return finalWordList;
 }
