@@ -3,7 +3,11 @@
 let gameRunner = (diff) =>
 {
     let wordToGuess;
-    let wordList = sortAndSplit(fileReader(),diff);
+    
+    let wordList = fileReader();
+    console.log(wordList);
+
+    wordList = sortAndSplit(wordList, diff);
 
     wordToGuess = wordList[Math.floor((Math.random() * wordList.length))];
 
@@ -12,9 +16,7 @@ let gameRunner = (diff) =>
     game(wordToGuess);
 
 
-
-
-    
+    console.log(wordToGuess);
 }
 
 let game = (word) =>
@@ -48,30 +50,24 @@ let strFormat = (str) =>
 
 }
 
-let fileReader = () =>
-{
-    let filePath =  "file://words.txt";
-    let file = new XMLHttpRequest();
-    file.open("GET", file, false);
-    file.onreadystatechange = () =>
-    {
-        if(file.readyState === 4)
-            {
-                if(file.status === 200 || rawFile.status == 0)
-                {
-                    var allText = file.responseText;
-                    return allText.split('\n');
-                }
-            }
+let fileReader = () =>{
+    let url = "https://raw.githubusercontent.com/dwyl/english-words/master/words_alpha.txt";
+    let reader = new XMLHttpRequest();
+    reader.onreadystatechange = function () {
+        if (reader.readyState == 4 && reader.status == 200) {
+            return this.responseText;    
+        }
     }
-    file.send(null);
+
+    reader.open('GET', url, true);
+    reader.send();
 }
 
-let sortAndSplit = (rawWordList, diff) =>
-{
+let sortAndSplit = (rawWordList, diff) =>{
     let finalWordList = [];
     let startNum;
     let endNum;
+
 
     switch (diff)
     {
@@ -96,7 +92,8 @@ let sortAndSplit = (rawWordList, diff) =>
     }
 
 
-   rawWordList.sort(function(a, b){
+    rawWordList = rawWordList.split('\n');
+    rawWordList.sort(function(a, b){
     return b.length - a.length;
    });
 
