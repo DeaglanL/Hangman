@@ -2,10 +2,50 @@
 
 let gameRunner = (diff) =>
 {
+    let wordToGuess;
     let wordList = sortAndSplit(fileReader(),diff);
+
+    wordToGuess = wordList[Math.floor((Math.random() * wordList.length))];
+
+    wordToGuess = strFormat(wordToGuess);
+
+    game(wordToGuess);
+
+
 
 
     
+}
+
+let game = (word) =>
+{
+    let gameFinished = false;
+
+
+    while(!gameFinished)
+        {
+            //display game state
+
+            //take user input
+
+            //check against word
+
+            //update game state
+        }
+
+        //end game stuff 
+        //reset button
+
+}
+
+let strFormat = (str) =>
+{
+    str = str.trim();
+    str = str.toLowerCase();
+    str = str.replace('\n', "");
+    str = str.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+    return str;
+
 }
 
 let fileReader = () =>
