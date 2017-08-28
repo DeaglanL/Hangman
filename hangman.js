@@ -10,9 +10,11 @@ let gameRunner = (diff) =>
     setTimeout(function () {
     wordList = sortAndSplit(wordList, diff);
     wordToGuess = wordList[Math.floor((Math.random() * wordList.length))];
-    wordToGuess = strFormat(wordToGuess);
-    game(wordToGuess);
     console.log(wordToGuess);
+    wordToGuess = strFormat(wordToGuess);
+    console.log(wordToGuess);
+    game(wordToGuess);
+    
     },5000);
 
 
@@ -24,7 +26,7 @@ let game = (word) =>
     let gameFinished = false;
 
 
-    while(!gameFinished)
+    while(gameFinished)
         {
             //display game state
 
@@ -99,12 +101,12 @@ let sortAndSplit = (rawWordList, diff) =>{
    });
    
 
+
    
 for (var index = 0; index < rawWordList.length; index++) {
-    if(rawWordList[index].count > startNum && rawWordList[index].count < endNum) //this is the problem
+    if(rawWordList[index].length >= startNum && rawWordList[index].length <= endNum) //this is the problem
         {
             finalWordList.push(rawWordList[index]);
-            console.log(" ");
         }
 }
    return finalWordList;
