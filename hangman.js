@@ -24,17 +24,28 @@ let gameRunner = (diff) =>
 let game = (word) =>
 {
     let gameFinished = false;
+    //remove pregame div
 
 
     while(gameFinished)
         {
-            //display game state
-
+            //display game state based on lives and letters played
+            //create div and appened a gamestart string
+            //append textbox and enter button
+            //wait for user input
             //take user input
 
-            //check against word
+           
 
-            //update game state
+            //check against word
+            //if (not in word || already guessed)
+            //take away a life
+            //add to guesses
+            //if (in word)
+            //added to word display
+            //add to guesses
+            //continue
+
         }
 
         //end game stuff 
