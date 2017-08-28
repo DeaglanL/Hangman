@@ -35,7 +35,7 @@ let gameRunner = (diff) =>
     let gameFinished = false;
     game(wordToGuess);
     
-    },5000);
+    },2000);
 
 
    
@@ -57,6 +57,26 @@ let game = (word) =>{
 
             gameEle.innerHTML = "";
             disPlayString = "";
+
+
+            //lost check
+            if (livesLost >= 7) {
+                gameEle.innerHTML = "YOU LOST ! :( <br><br> refresh the page to play again";
+
+                return;
+            }
+
+            if(correctGuesses.length === wordToGuess.length)
+                {
+                    gameEle.innerHTML = "YOU WIN! :D <br><br> Refresh to play again"
+                    return;
+                }
+
+
+          
+
+
+
 
 
             //display game state based on lives and letters played
@@ -174,13 +194,13 @@ let guessChecker = (letter) =>
 let hangmanBuilder = () =>
 {
     let disp = [];
-    disp.push("|/---------    <br>");
-    disp.push("|         |    <br>");
-    disp.push("|         0    <br>");
-    disp.push("|        /|\\   <br>");
-    disp.push("|        / \\   <br>");
-    disp.push("|              <br>");
-    disp.push("|              <br>");
+    disp.push("|/--    <br>");
+    disp.push("|&nbsp    |    <br>");
+    disp.push("|&nbsp    0    <br>");
+    disp.push("|&nbsp   /|\\   <br>");
+    disp.push("|&nbsp   / \\   <br>");
+    disp.push("|&nbsp          <br>");
+    disp.push("|&nbsp          <br>");
 
     return disp;
 }
