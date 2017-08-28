@@ -23,6 +23,7 @@ let gameRunner = (diff) =>
 
 let game = (word) =>
 {
+    
     let gameFinished = false;
     //remove pregame div
 
