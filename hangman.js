@@ -1,11 +1,14 @@
+    'use strict'
+    
     
     let wordList;
     let hangManDisplay = [];
     let livesLost;
     let maxLives = 7;
-    let correctGuesses;
-    let incorrectGuesses;
+    let correctGuesses = [];
+    let incorrectGuesses = [];
     let disPlayString;
+    let wordToGuess;
 
      
 
@@ -14,16 +17,22 @@
 
 let gameRunner = (diff) =>
 {
-    let wordToGuess;
+    
 
     fileReader();
 
     setTimeout(function () {
     wordList = sortAndSplit(wordList, diff);
     wordToGuess = wordList[Math.floor((Math.random() * wordList.length))];
-    console.log(wordToGuess);
     wordToGuess = strFormat(wordToGuess);
+
+
+    //initilise and start game
+    document.getElementById("preGame").remove();
     console.log(wordToGuess);
+    livesLost = 0;
+    hangManDisplay = hangmanBuilder();
+    let gameFinished = false;
     game(wordToGuess);
     
     },5000);
@@ -32,14 +41,13 @@ let gameRunner = (diff) =>
    
 }
 
-let game = (word) =>
-{
+let game = (word) =>{
 
-    let gameFinished = false;
+    
     //remove pregame div
-    document.getElementById("preGame").remove();
-    hangManDisplay = hangmanBuilder();
-    livesLost = 0;
+    
+ 
+    
     let gameEle = document.getElementById("game");
 
 
@@ -47,8 +55,6 @@ let game = (word) =>
 
 
 
-    while(gameFinished)
-        {
             gameEle.innerHTML = "";
             disPlayString = "";
 
@@ -60,20 +66,20 @@ let game = (word) =>
                 }
                 
             }
-            disPlayString += "\n ---------------------------------------------";
+            disPlayString += "<br>  ---------------------------------------------";
 
-            disPlayString+= "\n Incorrect Guesses: "
+            disPlayString+= "<br>  Incorrect Guesses: "
 
             for (var q = 0; q < incorrectGuesses.length; q++) {
                 disPlayString += incorrectGuesses[q];
             }
 
-            disPlayString += "\n ---------------------------------------------";
+            disPlayString += "<br> ---------------------------------------------";
 
 
-            disPlayString+= "Current word: "
+            disPlayString+= "<br> Current word: "
 
-            let noCorGuess;
+            let noCorGuess = false;
             for (var p = 0; p < wordToGuess.length; p++) {
                 noCorGuess = false;
                 for (var t = 0; t < correctGuesses.length; t++) {
@@ -84,12 +90,32 @@ let game = (word) =>
                     }
                 }
                 
-                if (noCorGuess){
+                if (!noCorGuess){ 
                     disPlayString += "-";
                     }
+
+                    
                 
             }
+            disPlayString += "<br> <br>";
             gameEle.innerHTML = disPlayString;
+            let input = document.createElement("input");
+            input.id = "guessInput";
+
+            let guess = document.createElement("button");
+            guess.id = "guessEnter";
+            guess.innerHTML = "Guess!";
+            guess.setAttribute("onclick","guessChecker(guessInput.value)");
+
+
+
+
+
+
+
+            gameEle.appendChild(input);
+            gameEle.appendChild(guess);
+
 
             //create div and appened a gamestart string
             //append textbox and enter button
@@ -107,23 +133,54 @@ let game = (word) =>
             //add to guesses
             //continue
 
-        }
 
         //end game stuff 
         //reset button
 
 }
 
+let guessChecker = (letter) =>
+{
+   if (isEmpty(letter)) {
+       window.alert("invalid input");
+       game(wordToGuess);
+       return;
+       //call game again and show a error
+   }
+
+
+   for (var v = 0; v < wordToGuess.length; v++) {
+    if (wordToGuess.charAt(v) === letter.charAt(0)) { //notworking
+        correctGuesses.push(letter.charAt(0));
+        game(wordToGuess);
+        return;
+
+    }
+   }
+    
+   incorrectGuesses.push(letter.charAt(0));
+   livesLost++;
+   game(wordToGuess);
+
+    
+
+
+   //check if letter is in word
+   //true: add to correct guess and call game
+   //false add to incorrect guesses, add to lost lives and call game
+   //add a check to see if win or lost
+}
+
 let hangmanBuilder = () =>
 {
-    let disp;
-    disp.push("|              \n");
-    disp.push("|              \n");
-    disp.push("|        / \\  \n");
-    disp.push("|        /|\\  \n");
-    disp.push("|         0    \n");
-    disp.push("|         |    \n");
-    disp.push(" _________     \n");
+    let disp = [];
+    disp.push("|/---------    <br>");
+    disp.push("|         |    <br>");
+    disp.push("|         0    <br>");
+    disp.push("|        /|\\   <br>");
+    disp.push("|        / \\   <br>");
+    disp.push("|              <br>");
+    disp.push("|              <br>");
 
     return disp;
 }
@@ -196,4 +253,8 @@ for (var index = 0; index < rawWordList.length; index++) {
         }
 }
    return finalWordList;
+}
+
+let isEmpty = (str) => {
+    return (!str || 0 === str.length);
 }
