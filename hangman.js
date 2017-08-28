@@ -1,5 +1,16 @@
     
     let wordList;
+    let hangManDisplay = [];
+    let livesLost;
+    let maxLives = 7;
+    let correctGuesses;
+    let incorrectGuesses;
+    let disPlayString;
+
+     
+
+
+
 
 let gameRunner = (diff) =>
 {
@@ -23,14 +34,63 @@ let gameRunner = (diff) =>
 
 let game = (word) =>
 {
-    
+
     let gameFinished = false;
     //remove pregame div
+    document.getElementById("preGame").remove();
+    hangManDisplay = hangmanBuilder();
+    livesLost = 0;
+    let gameEle = document.getElementById("game");
+
+
+
+
 
 
     while(gameFinished)
         {
+            gameEle.innerHTML = "";
+            disPlayString = "";
+
+
             //display game state based on lives and letters played
+            for (var h = 0; h < maxLives; h++) {
+                if (h < livesLost) {
+                    disPlayString += hangManDisplay[h];
+                }
+                
+            }
+            disPlayString += "\n ---------------------------------------------";
+
+            disPlayString+= "\n Incorrect Guesses: "
+
+            for (var q = 0; q < incorrectGuesses.length; q++) {
+                disPlayString += incorrectGuesses[q];
+            }
+
+            disPlayString += "\n ---------------------------------------------";
+
+
+            disPlayString+= "Current word: "
+
+            let noCorGuess;
+            for (var p = 0; p < wordToGuess.length; p++) {
+                noCorGuess = false;
+                for (var t = 0; t < correctGuesses.length; t++) {
+                    
+                    if (wordToGuess.charAt(p) === correctGuesses[t]) {
+                        disPlayString += correctGuesses[t];
+                        noCorGuess = true;
+                    }
+                }
+                
+                if (noCorGuess){
+                    disPlayString += "-";
+                    }
+                
+            }
+            gameEle.innerHTML = disPlayString;
+
             //create div and appened a gamestart string
             //append textbox and enter button
             //wait for user input
@@ -52,6 +112,20 @@ let game = (word) =>
         //end game stuff 
         //reset button
 
+}
+
+let hangmanBuilder = () =>
+{
+    let disp;
+    disp.push("|              \n");
+    disp.push("|              \n");
+    disp.push("|        / \\  \n");
+    disp.push("|        /|\\  \n");
+    disp.push("|         0    \n");
+    disp.push("|         |    \n");
+    disp.push(" _________     \n");
+
+    return disp;
 }
 
 let strFormat = (str) =>
