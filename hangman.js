@@ -1,4 +1,5 @@
-    'use strict'
+    "use strict";
+
 
 
     let wordList;
@@ -17,7 +18,6 @@
             wordToGuess = wordList[Math.floor((Math.random() * wordList.length))];
             wordToGuess = strFormat(wordToGuess);
             document.getElementById("preGame").remove();
-            console.log(wordToGuess);
             livesLost = 0;
             hangManDisplay = hangmanBuilder();
             let gameFinished = false;
@@ -43,7 +43,7 @@
         }
 
         if (correctGuesses.length === wordToGuess.length) {
-            gameEle.innerHTML = "YOU WIN! :D <br><br> Refresh to play again"
+            gameEle.innerHTML = "YOU WIN! :D <br><br> Refresh to play again";
             return;
         }
 
@@ -55,7 +55,7 @@
         }
         disPlayString += "<br>  ---------------------------------------------";
 
-        disPlayString += "<br>  Incorrect Guesses: "
+        disPlayString += "<br>  Incorrect Guesses: ";
 
         for (var q = 0; q < incorrectGuesses.length; q++) {
             disPlayString += incorrectGuesses[q];
@@ -64,7 +64,8 @@
         disPlayString += "<br> ---------------------------------------------";
 
 
-        disPlayString += "<br> Current word: "
+        disPlayString += "<br> Current word: ";
+
 
         let noCorGuess = false;
         for (var p = 0; p < wordToGuess.length; p++) {
@@ -136,7 +137,7 @@
     let strFormat = (str) => {
         str = str.trim();
         str = str.toLowerCase();
-        str = str.replace('\n', "");
+        str = str.replace("\n", "");
         str = str.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
         return str;
     }
